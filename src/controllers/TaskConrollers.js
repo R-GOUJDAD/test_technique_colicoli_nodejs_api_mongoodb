@@ -17,7 +17,7 @@ exports.deletTask= async(req, res)=> {
     .then((doc) => res.json(doc))
     .catch((err) => res.json(err));
 }
-exports.deletTask= async(req, res)=> {
+exports.updateTask= async(req, res)=> {
     const task= req.params.Task;
     const id= req.params.id;
     console.log(id)
