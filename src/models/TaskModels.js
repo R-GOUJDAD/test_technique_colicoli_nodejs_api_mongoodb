@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const uri = 'mongodb://localhost:27017/Tasks';
 const TaskSchema = new mongoose.Schema({
     Task: { type: String },
+    completed: { type: Boolean, default: false },
   });
   const Task = mongoose.model('Task', TaskSchema);
 exports.GetAllTasks = () => {
@@ -77,4 +78,22 @@ exports.GetAllTasks = () => {
 
     })
   }
+  exports.finTask = (id, value) => {
+    return new Promise((resolve, reject) => {
+      try {
+        mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+          return Task.updateOne({ _id: id }, { completed: value });
+        }).then((doc) => {
+          mongoose.disconnect();
+          resolve(doc);
+        }).catch((err) => {
+          mongoose.disconnect();
+          reject(err);
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  }
+  
   

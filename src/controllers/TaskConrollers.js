@@ -25,3 +25,11 @@ exports.updateTask= async(req, res)=> {
     .then((doc) => res.json(doc))
     .catch((err) => res.json(err));
 }
+exports.finTask= async(req, res)=> {
+    const value= req.params.value;
+    const id= req.params.id;
+    console.log(id)
+    await TaskModel.finTask(id,value)
+    .then((doc) => res.json(doc))
+    .catch((err) => res.json(err));
+}
