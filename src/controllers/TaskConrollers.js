@@ -1,4 +1,4 @@
-// controllers.js
+
 const TaskModel = require('../models/TaskModels');
 exports.GetAllTasks= async(req, res)=> {
     await TaskModel.GetAllTasks()

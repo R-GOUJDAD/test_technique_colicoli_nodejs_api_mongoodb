@@ -1,18 +1,17 @@
 
 const express = require('express');
-const port = 3000; // Port sur lequel le serveur écoutera
-const TaskRoute = require('./src/routes/TaskRoutes');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const app = express();
 const path = require('path');
-
+const port = 3000; // Port sur lequel le serveur écoutera
+const TaskRoute = require('./src/routes/TaskRoutes');
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
 // Utilisez bodyParser et cors
 app.use(bodyParser.json());
-app.use(cors());
 
+app.use(cors());
 // Utilisez les routeurs avec app.use()
 app.use('/', TaskRoute);
 app.listen(port, () => {

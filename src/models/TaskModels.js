@@ -2,9 +2,10 @@
 const mongoose = require('mongoose');
 const uri = 'mongodb://localhost:27017/Tasks';
 const TaskSchema = new mongoose.Schema({
-    Task: { type: String },
-    completed: { type: Boolean, default: false },
-  });
+  Task: { type: String },
+  date: { type: Date, default: Date.now }, // Date actuelle par défaut
+  completed: { type: Boolean, default: false },
+});
   const Task = mongoose.model('Task', TaskSchema);
 exports.GetAllTasks = () => {
     return new Promise((resolve, reject) => {
@@ -20,15 +21,12 @@ exports.GetAllTasks = () => {
       })
     })
   }
-
   exports.AddTask = (taskData) => {
     return new Promise((resolve, reject) => {
       mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
         console.log('DB connected!!!');
-  
         // Créez une nouvelle instance de modèle Task avec les données de la tâche
         const newTask = new Task({Task:taskData});
-  
         // Sauvegardez la nouvelle tâche dans la base de données
         return newTask.save();
       }).then((doc) => {
@@ -63,7 +61,7 @@ exports.GetAllTasks = () => {
         try{
       mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
         console.log("rachid")
-        return Task.updateOne({ _id: id }, {Task:task})
+        return Task.updateOne({ _id: id }, {Task:task,date:new Date})
         
       }).then((doc) => {
         mongoose.disconnect(doc);
@@ -75,7 +73,6 @@ exports.GetAllTasks = () => {
     }catch(err){
         console.log(err);
     }
-
     })
   }
   exports.finTask = (id, value) => {
